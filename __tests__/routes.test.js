@@ -17,9 +17,16 @@ describe('Cars API', () => {
   // Health check
   describe('GET /', () => {
     it('should return 200 and health check message', async () => {
-      const res = await request(app).get('/');
+      APP_VERSION = '1.0.0'; // Mock APP_VERSION
       db.isAlive.mockReturnValue(true); 
+      const res = await request(app).get('/');
+      console.dir(res, { depth: null });
       expect(res.status).toBe(200);
+      expect(res.body).toEqual({
+        message: 'APP IS RUNNING',
+        version: 'v1.0.0',
+        dbIsAlive: true
+      });
     });
   });
 

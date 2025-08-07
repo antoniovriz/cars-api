@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('./db');
-
+const { log } = require('./log');
 const router = express.Router();
 
 router.post('/cars', async (req, res) => {
@@ -75,9 +75,11 @@ router.delete('/cars/:id', async (req, res) => {
 });
 
 // Health check
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
 
-    const dbIsAlive = db.isAlive();
+    const dbIsAlive = await db.isAlive();
+    
+    log(`Health check: Database is ${dbIsAlive ? 'alive' : 'not reachable'}`);
 
     if (!dbIsAlive) {
         return res.status(500).json({ error: 'Database is not reachable' });
