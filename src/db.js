@@ -24,12 +24,17 @@ const initializeDatabase = async () => {
         log('Connecting to PostgreSQL...');
         await client.connect();
 
+
+
+        log(`Checking if database ${process.env.PG_DATABASE} exists...`);
         const dbExists = await client.query(`
             SELECT 1 FROM pg_database WHERE datname = $1
         `, [process.env.PG_DATABASE]);
 
+        log(`Database ${process.env.PG_DATABASE} exists: ${dbExists.rowCount > 0}`);
+
         if (dbExists.rowCount === 0) {
-            await client.query(`CREATE DATABASE ${process.env.PG_DATABASE}`);
+            await client.query(`CREATE DATABASE ${escapeIdentifier(process.env.PG_DATABASE)}`);
             log(`Database ${process.env.PG_DATABASE} created`);
         } else {
             log(`Database ${process.env.PG_DATABASE} already exists`);
@@ -106,6 +111,10 @@ const isAlive = async () => {
         return false;
     }
 };
+
+function escapeIdentifier(identifier) {
+    return '"' + identifier.replace(/"/g, '""') + '"';
+}
 
 module.exports = {
     saveCar,

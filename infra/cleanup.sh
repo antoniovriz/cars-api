@@ -20,6 +20,17 @@ if ! command -v jq &> /dev/null; then
   echo "Error: jq is required for JSON parsing. Please install jq."
   exit 1
 fi
+echo "Starting cleanup process..."
+# Step 0: Delete the CloudWatch Log Group
+echo "Deleting CloudWatch Log Group for ECS Task..."
+aws logs delete-log-group \
+  --log-group-name /ecs/api-cars \
+  --region eu-west-1
+if [ $? -ne 0 ]; then
+  echo "Error deleting CloudWatch Log Group"
+  #exit 1
+fi
+echo "CloudWatch Log Group deleted successfully."
 
 # Step 1: Delete the ECS Service
 echo "Deleting ECS Service: $SERVICE_NAME..."

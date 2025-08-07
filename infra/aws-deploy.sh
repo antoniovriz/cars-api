@@ -58,7 +58,12 @@ if [ $? -ne 0 ]; then
 fi
 echo "Policy attached successfully."
 
-# Step 2: register the ECS Task Definition
+# Step 2: register the ECS Task Definition and create the log group
+echo "Creating log group for ECS Task..."
+aws logs create-log-group \
+  --log-group-name /ecs/api-cars \
+  --region eu-west-1
+
 echo "Registering ECS Task Definition..."
 TASK_DEFINITION_REVISION=$(aws ecs register-task-definition --cli-input-json file://task.json | jq '.taskDefinition.revision')
 

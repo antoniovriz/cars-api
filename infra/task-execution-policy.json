@@ -25,6 +25,17 @@
         "ecr:BatchGetImage"
       ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "arn:aws:logs:eu-west-1:390000028094:log-group:/ecs/api-cars:*"
+      ]
     }
   ]
 }
