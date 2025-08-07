@@ -3,7 +3,8 @@ const carRoutes = require('./routes');
 const db = require('./db');
 const { log } = require('./log');
 const fs = require('fs');
-const APP_VERSION = JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
+const APP_VERSION = "v1.00"
+//const APP_VERSION = JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
 
 const startServer = async () => {
     // Initialize the database
