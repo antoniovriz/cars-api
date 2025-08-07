@@ -42,7 +42,7 @@ echo "IAM role created successfully."
 
 # Step 1.1: Attach the ECS Task Execution Policy
 echo "Creating IAM policy for ECS Task Execution..."
-aws iam create-policy --policy-name ECSParameterStoreAccess --policy-document file://parameter-store-policy.json
+aws iam create-policy --policy-name ECSAccess --policy-document file://task-execution-policy.json
 if [ $? -ne 0 ]; then
   echo "Error creating IAM policy"
   exit 1
@@ -51,7 +51,7 @@ echo "Policy created successfully."
 
 # Step 1.2: Attach the policy to the role
 echo "Attaching policy to IAM role..."
-aws iam attach-role-policy --role-name ecsTaskExecutionRole --policy-arn "arn:aws:iam::$ACCOUNT_ID:policy/ECSParameterStoreAccess"
+aws iam attach-role-policy --role-name ecsTaskExecutionRole --policy-arn "arn:aws:iam::$ACCOUNT_ID:policy/ECSAccess"
 if [ $? -ne 0 ]; then
   echo "Error attaching policy to IAM role"
   exit 1

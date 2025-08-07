@@ -76,7 +76,20 @@ router.delete('/cars/:id', async (req, res) => {
 
 // Health check
 router.get('/', (req, res) => {
-    res.status(200).json({ message: 'OK' });
+
+    const dbIsAlive = db.isAlive();
+
+    if (!dbIsAlive) {
+        return res.status(500).json({ error: 'Database is not reachable' });
+    }
+
+    res.status(200).json(
+        { 
+          message: `APP IS RUNNING`,
+          version: `v${APP_VERSION}`,
+          dbIsAlive 
+        }
+    );
 });
 
 module.exports = router;

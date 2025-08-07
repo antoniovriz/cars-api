@@ -1,7 +1,8 @@
 services:
   api:
-    context: .
-    dockerfile: docker/dev.Dockerfile
+    build:
+      context: .
+      dockerfile: docker/dev.Dockerfile
     command: 
       - node
       - src/index.js

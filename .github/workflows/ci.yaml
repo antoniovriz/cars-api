@@ -5,7 +5,6 @@ on:
     types: [published]
 
 env:
-  AWS_REGION: ${{ secrets.AWS_REGION }}
   ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
   IMAGE_TAG: ${{ github.event.release.tag_name }}
 

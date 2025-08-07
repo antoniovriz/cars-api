@@ -97,10 +97,21 @@ const deleteCar = async (id) => {
     await pool.query(query, [id]);
 };
 
+const dbIsAlive = async () => {
+    try {
+        const res = await pool.query('SELECT NOW()');
+       return res.rowCount > 0;
+    } catch (error) {
+        console.error('Database is not reachable:', error.message);
+        return false;
+    }
+};
+
 module.exports = {
     saveCar,
     findCarById,
     findAllCars,
+    dbIsAlive,
     updateCar,
     deleteCar,
     initializeDatabase

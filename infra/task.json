@@ -4,7 +4,7 @@
   "containerDefinitions": [
     {
       "name": "api-cars-container",
-      "image": "nginx",
+      "image": "390000028094.dkr.ecr.eu-west-1.amazonaws.com/cars/api:latest",
       "essential": true,
       "portMappings": [
         {

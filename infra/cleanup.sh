@@ -109,8 +109,8 @@ else
 fi
 
 # Step 7: Detach and Delete IAM Policy
-echo "Detaching IAM policy ECSParameterStoreAccess..."
-POLICY_ARN="arn:aws:iam::$ACCOUNT_ID:policy/ECSParameterStoreAccess"
+echo "Detaching IAM policy ECSAccess..."
+POLICY_ARN="arn:aws:iam::$ACCOUNT_ID:policy/ECSAccess"
 POLICY_EXISTS=$(aws iam get-policy --policy-arn "$POLICY_ARN" --region "$REGION" --query "Policy.Arn" --output text 2>/dev/null)
 if [ -n "$POLICY_EXISTS" ]; then
   aws iam detach-role-policy --role-name ecsTaskExecutionRole --policy-arn "$POLICY_ARN"
@@ -120,7 +120,7 @@ if [ -n "$POLICY_EXISTS" ]; then
   fi
   echo "IAM policy detached successfully."
 
-  echo "Deleting IAM policy ECSParameterStoreAccess..."
+  echo "Deleting IAM policy ECSAccess..."
   aws iam delete-policy --policy-arn "$POLICY_ARN"
   if [ $? -ne 0 ]; then
     echo "Error deleting IAM policy"
@@ -128,7 +128,7 @@ if [ -n "$POLICY_EXISTS" ]; then
   fi
   echo "IAM policy deleted successfully."
 else
-  echo "IAM policy ECSParameterStoreAccess does not exist or is already deleted."
+  echo "IAM policy ECSAccess does not exist or is already deleted."
 fi
 
 # Step 8: Delete IAM Role (Optional)
