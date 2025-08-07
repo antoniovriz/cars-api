@@ -42,7 +42,10 @@ jobs:
           sed -i "s|:latest|:${{ env.IMAGE_TAG }}|g" ./infra/task.json
           aws ecs register-task-definition \
             --cli-input-json file://infra/task.json
+          TASK_REVISION=$(aws ecs describe-task-definition --task-definition apis | jq '.taskDefinition.revision')
+          # Update the service to use the new task definition
           aws ecs update-service \
             --cluster ${{ vars.ECS_CLUSTER }} \
             --service ${{ vars.ECS_SERVICE }} \
+            --task-definition apis:${TASK_REVISION} \
             --force-new-deployment
