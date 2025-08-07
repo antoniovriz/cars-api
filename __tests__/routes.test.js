@@ -18,7 +18,7 @@ describe('Cars API', () => {
   describe('GET /', () => {
     it('should return 200 and health check message', async () => {
       const res = await request(app).get('/');
-      db.isAlive.mockReturnValue(true); 
+      db.dbIsAlive.mockReturnValue(true); 
       expect(res.status).toBe(200);
     });
   });
