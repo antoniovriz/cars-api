@@ -1,0 +1,45 @@
+services:
+  api:
+    context: .
+    dockerfile: docker/dev.Dockerfile
+    command: 
+      - node
+      - src/index.js
+    environment:
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DATABASE=cars
+      - PG_HOST=pg
+      - PG_PORT=5432
+      - PG_SSL=false
+      - PORT=7007
+    ports:
+      - "7007:7007"
+    working_dir: /app
+    volumes:
+      - .:/app
+    networks:
+      - pg_network
+    depends_on:
+      pg:
+        condition: service_healthy
+  pg:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=cars
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    networks:
+      - pg_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+networks:
+  pg_network:
+    driver: bridge

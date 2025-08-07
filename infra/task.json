@@ -1,0 +1,53 @@
+{
+  "family": "apis",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+    {
+      "name": "api-cars-container",
+      "image": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "PORT",
+          "value": "80"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "PG_USER",
+          "valueFrom": "arn:aws:ssm:eu-west-1:390000028094:parameter/cars-api/postgres-user"
+        },
+        {
+          "name": "PG_HOST",
+          "valueFrom": "arn:aws:ssm:eu-west-1:390000028094:parameter/cars-api/postgres-endpoint"
+        },
+        {
+          "name": "PG_PASSWORD",
+          "valueFrom": "arn:aws:ssm:eu-west-1:390000028094:parameter/cars-api/postgres-pass"
+        },
+        {
+          "name": "PG_DB",
+          "valueFrom": "arn:aws:ssm:eu-west-1:390000028094:parameter/cars-api/postgres-db"
+        }
+      ],
+      "memory": 512,
+      "cpu": 256
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::390000028094:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::390000028094:role/ecsTaskExecutionRole"
+}
