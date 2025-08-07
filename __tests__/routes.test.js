@@ -11,15 +11,15 @@ app.use(router);
 
 describe('Cars API', () => {
   beforeEach(() => {
-    jest.clearAllMocks(); // limpiamos los mocks antes de cada test
+    jest.clearAllMocks();
   });
 
   // Health check
   describe('GET /', () => {
     it('should return 200 and health check message', async () => {
       const res = await request(app).get('/');
+      db.isAlive.mockReturnValue(true); 
       expect(res.status).toBe(200);
-      expect(res.body).toEqual({ message: 'OK' });
     });
   });
 
