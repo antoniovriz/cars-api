@@ -1,5 +1,5 @@
 name: Build docker image and deploy to AWS ECS
-
+run-name: Building and deploying version ${{ github.event.release.tag_name }}
 on:
   release:
     types: [published]
@@ -10,7 +10,7 @@ env:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
