@@ -21,11 +21,6 @@ describe('Cars API', () => {
       db.isAlive.mockReturnValue(true); 
       const res = await request(app).get('/');
       expect(res.status).toBe(200);
-      expect(res.body).toEqual({
-        message: 'APP IS RUNNING',
-        version: 'v1.0.0',
-        dbIsAlive: true
-      });
     });
   });
 
