@@ -97,7 +97,7 @@ const deleteCar = async (id) => {
     await pool.query(query, [id]);
 };
 
-const dbIsAlive = async () => {
+const isAlive = async () => {
     try {
         const res = await pool.query('SELECT NOW()');
        return res.rowCount > 0;
@@ -111,7 +111,7 @@ module.exports = {
     saveCar,
     findCarById,
     findAllCars,
-    dbIsAlive,
+    isAlive,
     updateCar,
     deleteCar,
     initializeDatabase
