@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./db');
 const { log } = require('./log');
+const { APP_VERSION } = require('./version');
 const router = express.Router();
 
 router.post('/cars', async (req, res) => {
