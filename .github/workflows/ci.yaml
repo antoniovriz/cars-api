@@ -36,3 +36,9 @@ jobs:
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
             ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:latest
+
+      - name: Publish task to AWS ECS
+        run: |
+          sed -i "s|:latest|:${{ env.IMAGE_TAG }}|g" ./infra/task.json
+          aws ecs register-task-definition \
+            --cli-input-json file://infra/task.json

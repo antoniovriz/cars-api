@@ -1,6 +1,7 @@
 const express = require('express');
 const carRoutes = require('./routes');
 const db = require('./db');
+const { log } = require('./log');
 const fs = require('fs');
 const APP_VERSION = JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
 
@@ -15,11 +16,11 @@ const startServer = async () => {
     app.use(carRoutes);
 
     app.listen(port, () => {
-        console.log(`Server listening on port ${port}`);
+        log(`Server listening on port ${port}`);
     });
 };
 
 startServer().catch((err) => {
-    console.error('Failed to start server:', err);
+    log(`Failed to start server: ${err.message}`, 'error');
 });
 

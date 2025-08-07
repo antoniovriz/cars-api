@@ -1,6 +1,6 @@
 const { Pool, Client } = require('pg');
 const Car = require('./car');
-
+const { log } = require('./log');
 // Configura el pool de conexiones
 const pool = new Pool({
     user: process.env.PG_USER,
@@ -21,7 +21,7 @@ const initializeDatabase = async () => {
     });
 
     try {
-        console.log('Connecting to PostgreSQL...');
+        log('Connecting to PostgreSQL...');
         await client.connect();
 
         const dbExists = await client.query(`
@@ -30,9 +30,9 @@ const initializeDatabase = async () => {
 
         if (dbExists.rowCount === 0) {
             await client.query(`CREATE DATABASE ${process.env.PG_DATABASE}`);
-            console.log(`Database ${process.env.PG_DATABASE} created`);
+            log(`Database ${process.env.PG_DATABASE} created`);
         } else {
-            console.log(`Database ${process.env.PG_DATABASE} already exists`);
+            log(`Database ${process.env.PG_DATABASE} already exists`);
         }
 
         await client.end();
@@ -47,9 +47,9 @@ const initializeDatabase = async () => {
             )
         `;
         await pool.query(createTableQuery);
-        console.log('Table cars created or already exists');
+        log('Table cars created or already exists');
     } catch (error) {
-        console.error('Error initializing database:', error.message);
+        log(`Error initializing database: ${error.message}`, 'error');
         throw error;
     }
 };
