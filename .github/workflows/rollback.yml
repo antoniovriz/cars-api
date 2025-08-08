@@ -24,10 +24,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
       - name: Publish task to AWS ECS
         run: |
           sed -i "s|:latest|:${{ env.IMAGE_TAG }}|g" ./infra/task.json
@@ -39,4 +35,5 @@ jobs:
             --cluster ${{ vars.ECS_CLUSTER }} \
             --service ${{ vars.ECS_SERVICE }} \
             --task-definition ${{ vars.ECS_TASK_DEFINITION }}:${TASK_REVISION} \
+
             --force-new-deployment
