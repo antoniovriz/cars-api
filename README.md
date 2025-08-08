@@ -1,9 +1,7 @@
 # Demos
-- Launch project locally
-- Deploying new infra through `aws-deploy.sh`
-- Releasing a new version
-- Rollback to a previous version
-- Destroying existing infrastructure throug `cleanup.sh`
+- Launch project locally 📹 https://youtu.be/_alt6XI4dIQ?si=75_N_XSURLawdEU3
+- Deploying new infra through `aws-deploy.sh` and releasing a new version (CI/CD) 📹 https://youtu.be/SJKQ1kB5XEQ?si=RBzFY2zWj1GMt_SI
+- Rollback to a previous version 📹 https://youtu.be/tLzGU1kI40c?si=bOSXvIxeIljLfls6
 
 # 🛠️ Start Project Locally
 
