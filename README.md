@@ -1,39 +1,43 @@
-o Description of the deployed architecture on AWS or LocalStack.
-o Scalability and resilience strategies.
-o Any relevant technical decisions.
+# 🛠️ Start Project Locally
 
-## Start project locally
+## Requirements
+- 🐳 **Docker**
+- 🐳 **Docker Compose**
+- 🛠️ **Make**
 
-### Requirements
-- docker
-- docker compose
-- make (to execute Makefile tasks)
+## Run the Project
+    make init
+    make test
+    make dev
 
-### Run the project
+# 🔄 CI/CD Pipelines
 
-```shell
-make init
-make test
-make dev
-```
+## CI/CD Workflow
+- 📦 **Code Checkout**: Retrieves the code from the repository for building.
+- 🔐 **AWS Authentication**: Uses stored secrets to authenticate with AWS, enabling access to services like ECR and ECS.
+- 🐳 **ECR Login**: Logs into Amazon ECR, AWS's Docker image registry.
+- 🏗️ **Docker Image Build**: Builds a Docker image using the production Dockerfile, tagged with:
+  - The GitHub release version (e.g., `v1.0.0`).
+  - `latest`.
+- 📤 **Push to ECR**: Uploads the Docker image to the ECR repository.
+- 📝 **Update ECS Task Definition**: Modifies the ECS task definition to use the new image version.
+- 🚀 **Deploy to ECS**: Forces a new deployment on ECS to run the latest application version.
 
-## CI/CD Pipelines
+🧾 Infrastructure Summary
+This script provisions AWS infrastructure to deploy a containerized application using ECS Fargate with public access through an Application Load Balancer (ALB).
 
-### ci/cd
-
-- Checks out the code from the repository so it can be built.
-- Authenticates with AWS using stored secrets, allowing access to services like ECR and ECS.
-- Logs into Amazon ECR, which is AWS's Docker image registry.
-- Builds a Docker image using the production Dockerfile, and tags it with:
-  - The version from the GitHub release (e.g. v1.0.0)
-  - latest
-- Pushes the Docker image to the ECR repository.
-- Updates the ECS task definition to use the new image version.
-- Deploys the updated task to ECS, forcing a new deployment so the service runs the latest version of the app.
-
-### pr_verify
-
-
-
-
-
+🔧 Components Created
+- IAM Role & Policy
+  - ecsTaskExecutionRole with permissions for ECS tasks.
+- CloudWatch Log Group
+  - /ecs/api-cars for capturing application logs.
+- ECS Task Definition
+  - Defines the container (api-cars-container) and config.
+- ECS Cluster & Service
+  - Runs the app on Fargate (api-cars-cluster, service: api).
+- Application Load Balancer (ALB)
+  - Public-facing ALB (fargate-alb) for HTTP traffic.
+- Target Group & Listener
+  - Routes traffic from ALB to the running container.
+- Networking
+  - Uses existing VPC, subnets, and security group.
