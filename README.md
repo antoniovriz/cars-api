@@ -23,10 +23,10 @@
 - 📝 **Update ECS Task Definition**: Modifies the ECS task definition to use the new image version.
 - 🚀 **Deploy to ECS**: Forces a new deployment on ECS to run the latest application version.
 
-🧾 Infrastructure Summary
+# 🧾 Infrastructure Summary
 This script provisions AWS infrastructure to deploy a containerized application using ECS Fargate with public access through an Application Load Balancer (ALB).
 
-🔧 Components Created
+## 🔧 Components Created
 - IAM Role & Policy
   - ecsTaskExecutionRole with permissions for ECS tasks.
 - CloudWatch Log Group
