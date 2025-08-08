@@ -71,3 +71,14 @@ To further improve the scalability of the containerized application deployed on 
 - **Database Sharding and Read Replicas** 🗄️
   - Enhance database scalability by implementing sharding for write-heavy operations and read replicas for read-heavy queries using Amazon RDS or Aurora. This will distribute database load and improve performance under high traffic.
 
+# 🤖 Use of AI in the Project
+
+Artificial Intelligence played a key role in enhancing the development and deployment of this ECS Fargate-based application. Below are the ways AI was utilized:
+
+- **Code Generation & Optimization** 🧑‍💻
+  - Leveraged AI-powered tools like GitHub Copilot to generate boilerplate code, Dockerfile configurations, and CI/CD pipeline scripts, reducing development time and ensuring best practices.
+
+- **Documentation Support** 📝
+  - AI assisted in drafting clear, concise, and well-structured Markdown documentation for the project, ensuring clarity for stakeholders.
+
+By integrating AI tools, the project benefited from faster development cycles, improved code quality, and optimized infrastructure design, enabling a more efficient and robust deployment. 🚀
