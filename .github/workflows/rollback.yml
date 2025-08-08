@@ -1,0 +1,42 @@
+name: Rollback Docker image and deploy to AWS ECS
+run-name: Rolling back to version ${{ github.event.release.tag_name }}
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Docker image tag'
+        required: true
+
+env:
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+  IMAGE_TAG: ${{ inputs.image_tag }}
+
+jobs:
+  rollback:
+    runs-on: ubuntu-24.04
+
+    steps:
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Publish task to AWS ECS
+        run: |
+          sed -i "s|:latest|:${{ env.IMAGE_TAG }}|g" ./infra/task.json
+          aws ecs register-task-definition \
+            --cli-input-json file://infra/task.json
+          TASK_REVISION=$(aws ecs describe-task-definition --task-definition ${{ vars.ECS_TASK_DEFINITION }} | jq '.taskDefinition.revision')
+          # Update the service to use the new task definition
+          aws ecs update-service \
+            --cluster ${{ vars.ECS_CLUSTER }} \
+            --service ${{ vars.ECS_SERVICE }} \
+            --task-definition ${{ vars.ECS_TASK_DEFINITION }}:${TASK_REVISION} \
+            --force-new-deployment
