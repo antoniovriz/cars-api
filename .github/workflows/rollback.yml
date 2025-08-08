@@ -1,5 +1,5 @@
 name: Rollback Docker image and deploy to AWS ECS
-run-name: Rolling back to version `${{ github.event.release.image_tag }}`
+run-name: Rolling back to version `${{ inputs.image_tag }}`
 on:
   workflow_dispatch:
     inputs:
@@ -38,6 +38,7 @@ jobs:
             --service ${{ vars.ECS_SERVICE }} \
             --task-definition ${{ vars.ECS_TASK_DEFINITION }}:${TASK_REVISION} \
             --force-new-deployment
+
 
 
 
