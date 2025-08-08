@@ -1,3 +1,10 @@
+# Demos
+- Launch project locally
+- Deploying new infra through `aws-deploy.sh`
+- Releasing a new version
+- Rollback to a previous version
+- Destroying existing infrastructure throug `cleanup.sh`
+
 # 🛠️ Start Project Locally
 
 ## Requirements
