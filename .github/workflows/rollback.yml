@@ -35,5 +35,5 @@ jobs:
             --cluster ${{ vars.ECS_CLUSTER }} \
             --service ${{ vars.ECS_SERVICE }} \
             --task-definition ${{ vars.ECS_TASK_DEFINITION }}:${TASK_REVISION} \
-
             --force-new-deployment
+
